@@ -19,16 +19,16 @@ protected void generate(GeneratedClassDefinition classDef) {
 
     classDef.getConstructor().addToBody(
         callMethod("frobnicate", classLiteral(type("MyNestedInterface")),
-	    newAnonymousClass(type("MyNestedInterface")).withFields(
-		    defineField(type(FieldType.class), "field").assignValue(callMethod(SomeClass.class, "staticMethod"))
-		).withMethods(
-		    defineMethod("doSomething").withParams(
-			defineParam(ParamType.class, "param")
-		).withBody(
-		    callMethod("field.someMethod", "param")
-		)
-	    )
-	)
+            newAnonymousClass(type("MyNestedInterface")).withFields(
+                    defineField(type(FieldType.class), "field").assignValue(callMethod(SomeClass.class, "staticMethod"))
+                ).withMethods(
+                    defineMethod("doSomething").withParams(
+                        defineParam(ParamType.class, "param")
+                ).withBody(
+                    callMethod("field.someMethod", "param")
+                )
+            )
+        )
     );
 
 }

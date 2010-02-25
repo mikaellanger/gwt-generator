@@ -5,16 +5,16 @@ The goal of this library is to provide a succinct DSL-like way to build generato
 protected void generate(GeneratedClassDefinition classDef) {
 
     classDef.addNestedInterface(defineInterface("MyNestedInterface").thatExtends(Superinterface.class).withMethods(
-	defineMethod("interfaceMethod").annotatedWith(AnAnnotation.class).withParams(
-	    defineParam(template(type(GenericType.class), TypeParameter.class), "parameter")
+        defineMethod("interfaceMethod").annotatedWith(AnAnnotation.class).withParams(
+            defineParam(template(type(GenericType.class), TypeParameter.class), "parameter")
         )
     );
 
     classDef.addNestedClass(defineClass("NestedClass").thatExtends(Superclass.class).withFields(
-    	    defineField(template(type(List.class), type("MyNestedInterface")), "listField")
-	).withMethods(
-	    defineMethod(type(List.class), "getList").withBody(returnValue("listField"))
-	)
+            defineField(template(type(List.class), type("MyNestedInterface")), "listField")
+        ).withMethods(
+            defineMethod(type(List.class), "getList").withBody(returnValue("listField"))
+        )
     );
 
     classDef.getConstructor().addToBody(

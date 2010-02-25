@@ -1,0 +1,34 @@
+The goal of this library is to provide a succinct DSL-like way to build generators for deferred binding in GWT without resorting to literal strings.
+"Self explanatory" silly example:
+
+@Override
+protected void generate(GeneratedClassDefinition classDef) {
+
+    classDef.addNestedInterface(defineInterface("MyNestedInterface").thatExtends(Superinterface.class).withMethods(
+	defineMethod("interfaceMethod").annotatedWith(AnAnnotation.class).withParams(
+	    defineParam(template(type(GenericType.class), TypeParameter.class), "parameter")
+        )
+    );
+
+    classDef.addNestedClass(defineClass("NestedClass").thatExtends(Superclass.class).withFields(
+    	    defineField(template(type(List.class), type("MyNestedInterface")), "listField")
+	).withMethods(
+	    defineMethod(type(List.class), "getList").withBody(returnValue("listField"))
+	)
+    );
+
+    classDef.getConstructor().addToBody(
+        callMethod("frobnicate", classLiteral(type("MyNestedInterface")),
+	    newAnonymousClass(type("MyNestedInterface")).withFields(
+		    defineField(type(FieldType.class), "field").assignValue(callMethod(SomeClass.class, "staticMethod"))
+		).withMethods(
+		    defineMethod("doSomething").withParams(
+			defineParam(ParamType.class, "param")
+		).withBody(
+		    callMethod("field.someMethod", "param")
+		)
+	    )
+	)
+    );
+
+}
